@@ -1,0 +1,8 @@
+<script>
+  console.log({ self: self })
+  console.log({ this: this })
+  console.log({ window: window })
+  console.log({ parent: parent })
+  console.log({ postMessage: postMessage })
+  parent.postMessage({ type: 'test' }, '*')
+</script>
