@@ -1,8 +1,25 @@
 <script>
-  console.log({ self: self })
-  console.log({ this: this })
-  console.log({ window: window })
-  console.log({ parent: parent })
-  console.log({ postMessage: postMessage })
-  parent.postMessage({ type: 'test' }, '*')
+    const random = (n) => {
+        return Math.floor(Math.random() * n)
+    }
+    const hex = (h, n) => {
+        return h.toString(16).padStart(n, '0')
+    }
+    const randomUUID = () => {
+        return [
+            `${hex(random(0xffffffff), 8)}`,
+            `${hex(random(0xffff), 4)}`,
+            `${hex(random(0xffff), 4)}`,
+            `${hex(random(0xffff), 4)}`,
+            `${hex(random(0xffffffffffff), 12)}`,
+        ].join('-')
+    }
+    if (document.cookie.indexOf('my_id=') < 0) {
+        document.cookie = `my_id=${randomUUID()}`
+    }
+    parent.postMessage({ my_id_cookie: document.cookie }, '*')
+    if (!('my_id' in localStorage)) {
+        localStorage.setItem('my_id', `my_id=${randomUUID()}`)
+    }
+    parent.postMessage({ my_id_local_storage: localStorage.getItem('my_id') }, '*')
 </script>
