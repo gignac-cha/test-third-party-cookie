@@ -1,0 +1,16 @@
+<body>
+    <button onclick="document.cookie = `my_id_cookie=${crypto.randomUUID()}; path=/`">Add Cookie</button>
+    <button onclick="document.cookie = `my_id_cookie=; expires=${new Date(0)}; path=/`">Remove Cookie</button>
+    <button onclick="cookieStore.get('my_id_cookie').then(value => document.querySelector('#log').textContent = value)">
+        Print Cookie
+    </button>
+    <pre id="log"></pre>
+    <script>
+        addEventListener('message', (event) => {
+            console.log('message', event.data)
+        })
+        const iframe = document.createElement('iframe')
+        iframe.src = 'https://gignac-cha.github.io/test-third-party-cookie/index.html'
+        document.body.appendChild(iframe)
+    </script>
+</body>
